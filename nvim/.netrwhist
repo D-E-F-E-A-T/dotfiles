@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =7
+let g:netrw_dirhist_7='/'
+let g:netrw_dirhist_6='/home'
+let g:netrw_dirhist_5='/home/mrgafs'
+let g:netrw_dirhist_4='/home/mrgafs/.config'
+let g:netrw_dirhist_3='/home/mrgafs/.config/i3'
+let g:netrw_dirhist_2='/home/mrgafs/researches'
+let g:netrw_dirhist_1='/home/mrgafs/.config/i3'
