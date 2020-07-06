@@ -1,14 +1,10 @@
 set $mod Mod4
 set $browser exec --no-startup-id google-chrome-stable
-set $inner_gaps 8
-set $outer_gaps 8
+set $inner_gaps 3
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 # Values from .Xdefaults
 gaps inner $inner_gaps
-gaps outer $outer_gaps
-exec --no-startup-id nm-applet
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec_always --no-startup-id xset r rate 300 50
 #colors 
 set_from_resource $blue    i3wm.color1     #DC322F
@@ -49,11 +45,6 @@ bindsym $mod+Shift+j  move down
 bindsym $mod+Shift+k    move up
 bindsym $mod+Shift+l move right
 
-# split in horizontal orientation
-bindsym $mod+v split h
-
-# split in vertical orientation
-bindsym $mod+Shift+v split v
 bindsym $mod+s			gaps inner current plus 5
 bindsym $mod+Shift+s		gaps inner current minus 5
 #open the Browser 
@@ -61,9 +52,6 @@ bindsym $mod+w $browser
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
-
-# change container layout (toggle split)
-bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -74,27 +62,26 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 #bindsym $mod+Shift+q focus parent
 #bar
-#bar {
-#	font pango:monospace 14\ bold
-#	#status_command i3status
-#	status_command i3blocks 
-#	i3bar_command i3bar -t
-#	position top
-#	mode dock
-#
-# colors {
-#    background #282A36
-#
-#    statusline #F8F8F2
-#    separator  #44475A
-#
-#    focused_workspace  #44475A #44475A #F8F8F2
-#    active_workspace   #282A36 #44475A #F8F8F2
-#    inactive_workspace #282A36 #282A36 #BFBFBF
-#    urgent_workspace   #FF5555 #FF5555 #F8F8F2
-#    binding_mode       #FF5555 #FF5555 #F8F8F2
-#  }
-#}
+bar {
+
+    height 25
+    workspace_buttons yes
+    font pango:Noto Sans 14
+    position top
+    status_command i3status -c ~/.config/i3/i3status.conf
+ colors {
+    background #282A36
+
+    statusline #F8F8F2
+    separator  #44475A
+
+    focused_workspace  #44475A #44475A #F8F8F2
+    active_workspace   #282A36 #44475A #F8F8F2
+    inactive_workspace #282A36 #282A36 #BFBFBF
+    urgent_workspace   #FF5555 #FF5555 #F8F8F2
+    binding_mode       #FF5555 #FF5555 #F8F8F2
+  }
+}
 
 
 # focus the child container
@@ -137,13 +124,7 @@ bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
-# reload the configuration file
-bindsym $mod+Shift+x exec shutdown now
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec --no-startup-id i3-msg exit
-# resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
@@ -181,7 +162,6 @@ for_window [class="^.*"] border pixel 2
 
 # Disable window borders for pinned flameshot screenshots
 
-# Use floating mode for Minecraft by default
 
 # Set wallapper
 exec_always  --no-startup-id feh --bg-fill $HOME/wallpaper.jpg
@@ -189,9 +169,18 @@ exec_always  setxkbmap -layout us,ar
 exec_always  setxkbmap -option 'grp:alt_shift_toggle'
 exec         --no-startup-id compton 
 # Start essential programs
-exec --no-startup-id udiskie
-
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+exec --no-startup-id pamac-tray
+exec --no-startup-id nm-applet
+exec_always --no-startup-id numlockx on
+exec --no-startup-id volumeicon
+popup_during_fullscreen smart
+bindsym $mod+semicolon split h
+bindsym $mod+v split v
+bindsym $mod+e layout toggle split
 # Extra keybinds
+bindsym $mod+Shift+e exec --no-startup-id arcolinux-logout
+bindsym $mod+X exec --no-startup-id arcolinux-logout
 bindsym $mod+c                exec --no-startup-id code 
 bindsym $mod+t                exec alacritty -e nvim -S ~/cp/cf.vim
 bindsym $mod+m                exec alacritty -e $HOME/.local/share/scripts/spotify.sh
