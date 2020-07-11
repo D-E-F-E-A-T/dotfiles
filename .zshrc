@@ -3,13 +3,12 @@ ZSH_THEME="dracula"
 ENABLE_CORRECTION="true"
 plugins=(git)
 source $ZSH/oh-my-zsh.sh
-alias mirror_sync="doas reflector --latest 100 --protocol http --protocol https --sort rate --save /etc/pacman.d/mirrorlist"
 alias :q='exit'
 alias i3c="nvim ~/.config/i3/config"
 alias nvc="nvim ~/.config/nvim/init.vim"
 alias tc="nvim ~/.config/alacritty/alacritty.yml"
 alias doas="doas --"
-alias clip="xclip -sel clipboard"
+alias paste="xclip -sel clipboard"
 
 
 
@@ -33,8 +32,8 @@ alias l.="ls -A | egrep '^\.'"
 #fix obvious typo's
 alias cd..='cd ..'
 alias pdw="pwd"
-alias udpate='sudo pacman -Syyu'
-alias upate='sudo pacman -Syyu'
+alias udpate='sudo apt update'
+alias upgrade='sudo apt upgrade'
 
 ## Colorize the grep command output for ease of use (good for log files)##
 alias grep='grep --color=auto'
@@ -67,14 +66,6 @@ alias userlist="cut -d: -f1 /etc/passwd"
 alias merge="xrdb -merge ~/.Xresources"
 
 # Aliases for software managment
-# pacman or pm
-alias pacman='sudo pacman --color auto'
-alias update='sudo pacman -Syyu'
-
-# yay as aur helper - updates everything
-alias pksyua="yay -Syu --noconfirm"
-alias upall="yay -Syu --noconfirm"
-
 #ps
 alias psa="ps auxf"
 alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
@@ -100,9 +91,6 @@ alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
 #hardware info --short
 alias hw="hwinfo --short"
 
-#skip integrity check
-alias yayskip='yay -S --mflags --skipinteg'
-alias trizenskip='trizen -S --skipinteg'
 
 #check vulnerabilities microcode
 alias microcode='grep . /sys/devices/system/cpu/vulnerabilities/*'
@@ -141,7 +129,6 @@ alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 alias riplong="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -3000 | nl"
 
 #Cleanup orphaned packages
-alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
 
 #get the error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
@@ -170,8 +157,7 @@ alias sr="sudo reboot"
 
 # # ex = EXtractor for all kinds of archives
 # # usage: ex <file>
-ex ()
-{
+ex () {
   if [ -f $1 ] ; then
     case $1 in
       *.tar.bz2)   tar xjf $1   ;;
@@ -195,10 +181,18 @@ ex ()
   fi
 }
 
+git_push(){
+        echo Enter the commit massage
+        read ma
+        git add .
+        git commit -m $ma
+        git push
+}
+
 #create a file called .bashrc-personal and put all your personal aliases
 #in there. They will not be overwritten by skel.
 
-pfetch
+neofetch
 if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
 startx
 fi
